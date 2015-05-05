@@ -1,0 +1,233 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>iCalendar (.ics) File Generator</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="bower_components/bootswatch-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/github-fork-ribbon-css/gh-fork-ribbon.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="bower_components/github-fork-ribbon-css/gh-fork-ribbon.ie.css" />
+    <![endif]-->   
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="github-fork-ribbon-wrapper right">
+        <div class="github-fork-ribbon">
+            <a href="https://github.com/Wysie/icalgen">Fork me on GitHub</a>
+        </div>
+    </div>
+
+	<div class="container">
+		<h3 class="header text-center">iCalendar (.ics) File Generator</h3>
+		<div class="row marketing">
+			<form class="form-horizontal" role="form" id="generateFormCalendar" accept-charset="UTF-8" data-toggle="validator">
+				<div class="form-group">
+					<label for="inputTitle" class="col-sm-4 control-label">Subject</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="inputTitle" name="inputTitle" cols="36" rows="6" placeholder="Please enter the subject" required="true"></div>
+				</div>
+				<div class="form-group">
+					<label for="inputDetails" class="col-sm-4 control-label">Details</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" id="inputDetails" placeholder="Please enter additional details" cols="36" rows="6" required="true"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputTimeZone" class="col-sm-4 control-label">Timezone</label>
+					<div class="col-sm-8">
+						<select id="timezones" data-live-search="true" data-width="auto"></select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="alldayevent" class="col-sm-4 control-label">All-day event</label>
+					<div class="col-sm-8">
+						<input type="checkbox" id="alldayevent" data-reverse>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputStartDate" class="col-sm-4 control-label">Start Date</label>
+					<div class="col-sm-8">
+						<div class='input-group date' id='inputStartDate'>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input id='inputStartDate2' type='text' class="form-control" required="true">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputStartTime" class="col-sm-4 control-label">Start Time</label>
+					<div class="col-sm-8">
+						<div class='input-group date' id='inputStartTime'>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+							<input id='inputStartTime2' type='text' class="form-control" required="true">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputEndDate" class="col-sm-4 control-label">End Date</label>
+					<div class="col-sm-8">
+						<div class='input-group date' id='inputEndDate'>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input id='inputEndDate2' type='text' class="form-control" required="true">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputEndTime" class="col-sm-4 control-label">End Time</label>
+					<div class="col-sm-8">
+						<div class='input-group date' id='inputEndTime'>
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+							<input id='inputEndTime2' type='text' class="form-control" required="true">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputVenue" class="col-sm-4 control-label">Venue</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="inputVenue" placeholder="Please enter the address" required="true"></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="includesubject" class="col-sm-4 control-label">Include subject in details</label>
+					<div class="col-sm-8">
+						<input type="checkbox" id="includesubject" checked data-reverse>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="includedatetime" class="col-sm-4 control-label">Include date and time in details</label>
+					<div class="col-sm-8">
+						<input type="checkbox" id="includedatetime" checked data-reverse>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="includevenue" class="col-sm-4 control-label">Include venue in details</label>
+					<div class="col-sm-8">
+						<input type="checkbox" id="includevenue" checked data-reverse>
+					</div>
+				</div>
+                
+				<div class="form-group has-success">
+					<label for="outputShortLink" class="col-sm-4 control-label">Shortlink</label>
+					<div class="col-sm-8">
+                        <input id='outputShortLink' type='text' class="form-control" readonly>
+                        <p class="help-block">Tip: Copy the shortlink above and use it directly. It will automatically generate and download the ICS file.</p>
+					</div>                    
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="submit" class="btn btn-primary btn-block btn-lg">Download iCalendar (.ics) File</button>
+					</div>
+				</div>
+			</form>
+		</div>
+        
+        
+        <div class="row marketing">
+            <div class="panel panel-default" id="icaldetails" style="display:none;">
+                <div class="panel-heading">Details Preview</div>
+                <div class="panel-body" id="icaldetailscontent">
+                    
+                </div>
+            </div>
+        </div>
+	</div>
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/sprintf/src/sprintf.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="bower_components/timezones/dist/timezones.js"></script>
+    <script src="bower_components/bootstrap-checkbox/dist/js/bootstrap-checkbox.js"></script>
+    <script src="bower_components/ics.js/dist/ics.deps.min.js"></script>
+    <script src="bower_components/ics.js/dist/ics.min.js"></script>
+    <script src="bower_components/bootswatch-dist/js/bootstrap.js"></script>
+    <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
+    <script src="bower_components/uri.js/src/URI.js"></script>
+    <script src="bower_components/uri.js/src/IPv6.js"></script>
+    <script src="bower_components/uri.js/src/SecondLevelDomains.js"></script>
+    <script src="bower_components/uri.js/src/punycode.js"></script>
+    <script src="bower_components/uri.js/src/URITemplate.js"></script>
+    <script src="bower_components/uri.js/src/jquery.URI.js"></script>
+    <script src="bower_components/uri.js/src/URI.min.js"></script>
+    <script src="bower_components/uri.js/src/jquery.URI.min.js"></script>
+    <script src="bower_components/uri.js/src/URI.fragmentQuery.js"></script>
+    <script src="bower_components/uri.js/src/URI.fragmentURI.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-50804695-4');ga('require', 'displayfeatures');
+      ga('require', 'linkid', 'linkid.js');ga('send','pageview');
+    </script>
+
+        <!-- build:js(.) scripts/plugins.js -->
+        <script src="bower_components/bootstrap/js/affix.js"></script>
+        <script src="bower_components/bootstrap/js/alert.js"></script>
+        <script src="bower_components/bootstrap/js/dropdown.js"></script>
+        <script src="bower_components/bootstrap/js/tooltip.js"></script>
+        <script src="bower_components/bootstrap/js/modal.js"></script>
+        <script src="bower_components/bootstrap/js/transition.js"></script>
+        <script src="bower_components/bootstrap/js/button.js"></script>
+        <script src="bower_components/bootstrap/js/popover.js"></script>
+        <script src="bower_components/bootstrap/js/carousel.js"></script>
+        <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+        <script src="bower_components/bootstrap/js/collapse.js"></script>
+        <script src="bower_components/bootstrap/js/tab.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/main.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
