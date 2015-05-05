@@ -59,6 +59,23 @@ function updatePreview() {
     }
 }
 
+/*
+function generateGoogleCal() {
+    var isAllDay = $('#alldayevent').is(':checked');
+    var offset = $('#timezones').find(':selected').val(); //.data('offset');
+    
+    var begin = moment.tz($('#inputStartDate2').val() + ' ' +  $('#inputStartTime2').val(), 'lll', offset);
+    var end = moment.tz($('#inputEndDate2').val() + ' ' +  $('#inputEndTime2').val(), 'lll', offset);
+    
+    var gcalStart = begin.utc().format("YYYYMMDDTHHmm");
+    var gcalEnd = end.utc().format("YYYYMMDDTHHmm");
+    
+    
+    var linkTemplate = "https://www.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s00Z/%s00Z&details=%s&location=%s&trp=true&sprop=LinkedIn&sprop=name:http://linkedin.com&sf=true&output=xml#f"
+    var generatedLink = sprintf(linkTemplate, inputTitle, gcalStart, gcalEnd, inputDetails, inputVenue);
+}
+*/
+
 function generateURL() {
     'use strict';
     var uri = new URI();
@@ -136,18 +153,18 @@ $(function() {
                 }
                 if (isAllDay) {
                     if (begin.isSame(end, 'day')) {
-                        details += 'Date: ' + begin.format('ll');
+                        details += 'Date - ' + begin.format('ll');
                     }
                     else {
-                        details += 'Date: ' + begin.format('ll') + ' - ' + end.format('ll');
+                        details += 'Date - ' + begin.format('ll') + ' to ' + end.format('ll');
                     }
                 }
                 else {
                     if (begin.isSame(end, 'day')) {
-                        details += 'Date and Time: ' + begin.format('lll') + ' - ' + end.format('LT');
+                        details += 'Date and Time - ' + begin.format('lll') + ' to ' + end.format('LT');
                     }
                     else {
-                        details += 'Date and Time: ' + begin.format('lll') + ' - ' + end.format('lll');
+                        details += 'Date and Time - ' + begin.format('lll') + ' to ' + end.format('lll');
                     }
                 }
             }
@@ -156,7 +173,7 @@ $(function() {
                 if (details !== '') {
                     details += SEPARATOR;
                 }			
-                details += 'Venue: ' + $('#inputVenue').val();
+                details += 'Venue - ' + $('#inputVenue').val();
             }
             
             if (details !== '') {
