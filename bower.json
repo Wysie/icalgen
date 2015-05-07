@@ -16,7 +16,8 @@
     "bootswatch-dist": "yeti",
     "bootstrap-validator": "~0.8.1",
     "uri.js": "~1.15.0",
-    "github-fork-ribbon-css": "~0.1.1"
+    "github-fork-ribbon-css": "~0.1.1",
+    "ladda-bootstrap": "~0.1.0"
   },
   "resolutions": {
     "jquery": "~2.1.4",

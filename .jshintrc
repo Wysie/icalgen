@@ -21,6 +21,8 @@
   "globals": {
     "moment": false,
     "ics": false,
-    "URI": false
+    "URI": false,
+    "Bitly": false,
+    "Ladda":false
   }
 }

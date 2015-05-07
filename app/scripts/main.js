@@ -1,5 +1,6 @@
 var cal;
 var SEPARATOR = (navigator.appVersion.indexOf('Win') !== -1) ? '\r\n' : '\n';
+var laddaShortLink;
 
 function updatePreview() {
     'use strict';
@@ -124,13 +125,23 @@ function parseURL() {
             $('#generateFormCalendar').trigger('submit');
         }
         
-        $('#outputShortLink').val(uri.toString());
+        $('#outputDirectLink').val(uri.toString());
         updatePreview();
     }
 }
 
+function updateShortLink(response) {
+    'use strict';
+    $('#outputShortLink').val(response.data.url);
+    laddaShortLink.stop();
+}
+
 $(function() {
     'use strict';
+
+    var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
+    laddaShortLink = Ladda.create($('#generateShortLink')[0]);
+    
 	$('#generateFormCalendar').validator().on('submit', function(e) {
         if (!e.isDefaultPrevented()) {
             e.preventDefault();
@@ -194,12 +205,12 @@ $(function() {
     
     $('#generateFormCalendar').on('change', function() {
         updatePreview();
-        $('#outputShortLink').val(generateURL());
+        $('#outputDirectLink').val(generateURL());
     });
     
     $('#generateFormCalendar').on('dp.change', function() {
         updatePreview();
-        $('#outputShortLink').val(generateURL());
+        $('#outputDirectLink').val(generateURL());
     });
     
     $('#alldayevent').change(function(){
@@ -213,21 +224,27 @@ $(function() {
         $('#inputEndTime2').parents('.form-group').removeClass('has-error');
     });
 
-    $('#inputStartDate .form-control').on('click', function () {
+    $('#inputStartDate .form-control').on('click', function() {
         $('#inputStartDate').data('DateTimePicker').show();
     });
 
-    $('#inputStartTime .form-control').on('click', function () {
+    $('#inputStartTime .form-control').on('click', function() {
         $('#inputStartTime').data('DateTimePicker').show();
     });
 
-    $('#inputEndDate .form-control').on('click', function () {
+    $('#inputEndDate .form-control').on('click', function() {
         $('#inputEndDate').data('DateTimePicker').show();
     });
 
-    $('#inputEndTime .form-control').on('click', function () {
+    $('#inputEndTime .form-control').on('click', function() {
         $('#inputEndTime').data('DateTimePicker').show();
     });
+    
+    $('#generateShortLink').on('click', function() {
+	 	laddaShortLink.start();
+        bitly.shorten(generateURL());
+    });    
+    
     
     $('#timezones').timezones();
     $('#timezones').selectpicker();
