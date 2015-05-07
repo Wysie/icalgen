@@ -18,3 +18,6 @@ This uses a number of other libraries (bower.json shows all of them), key ones b
 * [ics.js](https://github.com/nwcell/ics.js/) - My fork of it (which I am using) is [here](https://github.com/Wysie/ics.js/).
 * [moment.js](http://momentjs.com/) and [moment-timezone](http://momentjs.com/timezone/)
 * [URI.js](https://github.com/medialize/URI.js)
+
+## TODO
+Refactor/clean up code.

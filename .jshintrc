@@ -23,6 +23,7 @@
     "ics": false,
     "URI": false,
     "Bitly": false,
-    "Ladda":false
+    "Ladda": false,
+    "sprintf": false
   }
 }

@@ -1,6 +1,7 @@
 var cal;
 var SEPARATOR = (navigator.appVersion.indexOf('Win') !== -1) ? '\r\n' : '\n';
 var laddaShortLink;
+var laddaGCalShortLink;
 
 function updatePreview() {
     'use strict';
@@ -60,22 +61,77 @@ function updatePreview() {
     }
 }
 
-/*
 function generateGoogleCal() {
+    'use strict';
+    var inputTitle = encodeURIComponent($('#inputTitle').val());
     var isAllDay = $('#alldayevent').is(':checked');
-    var offset = $('#timezones').find(':selected').val(); //.data('offset');
+    var offset = $('#timezones').find(':selected').val();
     
     var begin = moment.tz($('#inputStartDate2').val() + ' ' +  $('#inputStartTime2').val(), 'lll', offset);
     var end = moment.tz($('#inputEndDate2').val() + ' ' +  $('#inputEndTime2').val(), 'lll', offset);
     
-    var gcalStart = begin.utc().format("YYYYMMDDTHHmm");
-    var gcalEnd = end.utc().format("YYYYMMDDTHHmm");
+    var gcalStart;
+    var gcalEnd;
     
+    if (isAllDay) {
+        end.add(1, 'days');
+        gcalStart = begin.format('YYYYMMDD');
+        gcalEnd = end.format('YYYYMMDD');
+    }
+    else {
+        gcalStart = begin.utc().format('YYYYMMDDTHHmm[00Z]');
+        gcalEnd = end.utc().format('YYYYMMDDTHHmm[00Z]');
+    }
     
-    var linkTemplate = "https://www.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s00Z/%s00Z&details=%s&location=%s&trp=true&sprop=LinkedIn&sprop=name:http://linkedin.com&sf=true&output=xml#f"
+    var details = '';
+    
+    if ($('#includesubject').prop('checked')) {
+        details += $('#inputTitle').val();
+    }
+    
+    if ($('#includedatetime').prop('checked') && $('#inputStartDate2').val() !== '' && $('#inputEndDate2').val() !== '') {
+        if (details !== '') {
+            details += SEPARATOR;
+        }
+        if (isAllDay) {
+            if (begin.isSame(end, 'day')) {
+                details += 'Date: ' + begin.format('ll');
+            }
+            else {
+                details += 'Date: ' + begin.format('ll') + ' - ' + end.format('ll');
+            }
+        }
+        else {
+            if (begin.isSame(end, 'day')) {
+                details += 'Date and Time: ' + begin.format('lll') + ' - ' + end.format('LT');
+            }
+            else {
+                details += 'Date and Time: ' + begin.format('lll') + ' - ' + end.format('lll');
+            }
+        }
+    }
+    
+    if ($('#includevenue').prop('checked') && $('#inputVenue').val() !== '') {
+        if (details !== '') {
+            details += SEPARATOR;
+        }			
+        details += 'Venue: ' + $('#inputVenue').val();
+    }
+    
+    if (details !== '') {
+        details += SEPARATOR;
+    }
+    
+    details += $('#inputDetails').val();
+    
+    var inputDetails = encodeURIComponent(details);
+    var inputVenue = encodeURIComponent($('#inputVenue').val());
+    
+    var linkTemplate = 'https://www.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s/%s&details=%s&location=%s&trp=true&sf=true&output=xml#f';
     var generatedLink = sprintf(linkTemplate, inputTitle, gcalStart, gcalEnd, inputDetails, inputVenue);
+    
+    return generatedLink;
 }
-*/
 
 function generateURL() {
     'use strict';
@@ -126,6 +182,7 @@ function parseURL() {
         }
         
         $('#outputDirectLink').val(uri.toString());
+        $('#outputGCalLink').val(generateGoogleCal());
         updatePreview();
     }
 }
@@ -136,11 +193,17 @@ function updateShortLink(response) {
     laddaShortLink.stop();
 }
 
+function updateGCalShortLink(response) {
+    'use strict';
+    $('#outputGCalShortLink').val(response.data.url);
+    laddaGCalShortLink.stop();
+}
+
 $(function() {
     'use strict';
 
-    var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
     laddaShortLink = Ladda.create($('#generateShortLink')[0]);
+    laddaGCalShortLink = Ladda.create($('#generateGCalShortLink')[0]);
     
 	$('#generateFormCalendar').validator().on('submit', function(e) {
         if (!e.isDefaultPrevented()) {
@@ -206,11 +269,13 @@ $(function() {
     $('#generateFormCalendar').on('change', function() {
         updatePreview();
         $('#outputDirectLink').val(generateURL());
+        $('#outputGCalLink').val(generateGoogleCal());
     });
     
     $('#generateFormCalendar').on('dp.change', function() {
         updatePreview();
         $('#outputDirectLink').val(generateURL());
+        $('#outputGCalLink').val(generateGoogleCal());
     });
     
     $('#alldayevent').change(function(){
@@ -242,9 +307,15 @@ $(function() {
     
     $('#generateShortLink').on('click', function() {
 	 	laddaShortLink.start();
+        var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
         bitly.shorten(generateURL());
-    });    
+    });
     
+    $('#generateGCalShortLink').on('click', function() {
+	 	laddaGCalShortLink.start();
+        var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
+        bitly2.shorten(generateGoogleCal());
+    });
     
     $('#timezones').timezones();
     $('#timezones').selectpicker();
