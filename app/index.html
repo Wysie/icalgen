@@ -23,10 +23,10 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    
+
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="bower_components/github-fork-ribbon-css/gh-fork-ribbon.ie.css" />
-    <![endif]-->   
+    <![endif]-->
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -40,7 +40,7 @@
     </div>
 
 	<div class="container">
-		<h3 class="header text-center">iCalendar (.ics) File Generator</h3>
+		<h3 class="header text-center">iCalendar (.ics) File and Google Calendar Link Generator</h3>
 		<div class="row marketing">
 			<form class="form-horizontal" role="form" id="generateFormCalendar" accept-charset="UTF-8" data-toggle="validator">
 				<div class="form-group">
@@ -54,14 +54,14 @@
 						<textarea class="form-control" id="inputDetails" placeholder="Please enter additional details" cols="36" rows="6" required="true"></textarea>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="inputTimeZone" class="col-sm-4 control-label">Timezone</label>
 					<div class="col-sm-8">
 						<select id="timezones" data-live-search="true" data-width="auto"></select>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="alldayevent" class="col-sm-4 control-label">All-day event</label>
 					<div class="col-sm-8">
@@ -122,36 +122,36 @@
 					<div class="col-sm-8">
 						<input type="text" class="form-control" id="inputVenue" placeholder="Please enter the address" required="true"></div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="includesubject" class="col-sm-4 control-label">Include subject in details</label>
 					<div class="col-sm-8">
 						<input type="checkbox" id="includesubject" checked data-reverse>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="includedatetime" class="col-sm-4 control-label">Include date and time in details</label>
 					<div class="col-sm-8">
 						<input type="checkbox" id="includedatetime" checked data-reverse>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="includevenue" class="col-sm-4 control-label">Include venue in details</label>
 					<div class="col-sm-8">
 						<input type="checkbox" id="includevenue" checked data-reverse>
 					</div>
 				</div>
-                
+
 				<div class="form-group has-success">
 					<label for="outputDirectLink" class="col-sm-4 control-label">Direct Link</label>
 					<div class="col-sm-8">
                         <input id='outputDirectLink' type='text' class="form-control" readonly>
                         <p class="help-block">Copy the direct link above and use it directly to automatically generate and download an ICS file with the provided information.</p>
-					</div>                    
+					</div>
 				</div>
-				
+
 				<div class="form-group has-success">
                     <div class="col-sm-4">
                         <button id="generateShortLink" class="btn btn-success btn-block ladda-button" data-style="expand-left"><span class="ladda-label">Generate Shortlink</span></button>
@@ -159,17 +159,17 @@
 					<div class="col-sm-8">
                         <input id='outputShortLink' type='text' class="form-control" readonly>
                         <p class="help-block">Shorten the direct link with Bit.ly. You can use this shortlink instead of the above (long) direct link.</p>
-					</div>                    
+					</div>
 				</div>
-                
+
                 <div class="form-group has-warning">
 					<label for="outputGCalLink" class="col-sm-4 control-label">Google Calendar (GCal) Link</label>
 					<div class="col-sm-8">
                         <input id='outputGCalLink' type='text' class="form-control" readonly>
                         <p class="help-block">Copy the Google Calendar link above and use it directly to automatically create an event in Google Calendar.</p>
-					</div>                    
+					</div>
 				</div>
-				
+
 				<div class="form-group has-warning">
                     <div class="col-sm-4">
                         <button id="generateGCalShortLink" class="btn btn-warning btn-block ladda-button" data-style="expand-left"><span class="ladda-label">Generate GCal Shortlink</span></button>
@@ -177,9 +177,9 @@
 					<div class="col-sm-8">
                         <input id='outputGCalShortLink' type='text' class="form-control" readonly>
                         <p class="help-block">Shorten the direct link with Bit.ly. You can use this shortlink instead of the above (long) Google Calendar link.</p>
-					</div>                    
+					</div>
 				</div>
-                
+
 				<div class="form-group">
 					<div class="col-sm-12">
 						<button type="submit" class="btn btn-primary btn-block btn-lg">Download iCalendar (.ics) File</button>
@@ -187,18 +187,18 @@
 				</div>
 			</form>
 		</div>
-        
-        
+
+
         <div class="row marketing">
             <div class="panel panel-default" id="icaldetails" style="display:none;">
                 <div class="panel-heading">Details Preview</div>
                 <div class="panel-body" id="icaldetailscontent">
-                    
+
                 </div>
             </div>
         </div>
 	</div>
-    
+
     <footer class="footer">
         <div class="container">
         <p class="text-muted text-center">Made by <a href="http://twitter.com/Wysie_Soh">@Wysie_Soh</a>.</p>

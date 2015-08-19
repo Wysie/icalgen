@@ -307,13 +307,15 @@ $(function() {
     
     $('#generateShortLink').on('click', function() {
 	 	laddaShortLink.start();
-        var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
+        //var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
+        var bitly = Bitly.setLogin('icalgen').setKey('R_f8d9e1048fa94b22bfc5141f0d103d62').setCallback(updateShortLink);
         bitly.shorten(generateURL());
     });
     
     $('#generateGCalShortLink').on('click', function() {
 	 	laddaGCalShortLink.start();
-        var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
+        //var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
+        var bitly2 = Bitly.setLogin('icalgen').setKey('R_f8d9e1048fa94b22bfc5141f0d103d62').setCallback(updateGCalShortLink);
         bitly2.shorten(generateGoogleCal());
     });
     
