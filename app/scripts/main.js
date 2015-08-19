@@ -10,13 +10,13 @@ function updatePreview() {
 
     var begin = moment.tz($('#inputStartDate2').val() + ' ' +  $('#inputStartTime2').val(), 'lll', offset);
     var end = moment.tz($('#inputEndDate2').val() + ' ' +  $('#inputEndTime2').val(), 'lll', offset);
-    
+
     var details = '';
-    
+
     if ($('#includesubject').prop('checked')) {
         details += $('#inputTitle').val();
     }
-    
+
     if ($('#includedatetime').prop('checked') && $('#inputStartDate2').val() !== '' && $('#inputEndDate2').val() !== '') {
         if (details !== '') {
             details += '<br>';
@@ -38,21 +38,21 @@ function updatePreview() {
             }
         }
     }
-    
+
     if ($('#includevenue').prop('checked') && $('#inputVenue').val() !== '') {
         if (details !== '') {
             details += '<br>';
-        }			
+        }
         details += 'Venue: ' + $('#inputVenue').val();
     }
-    
+
     if (details !== '') {
         details += '<br>';
     }
-    
+
     details += $('#inputDetails').val();
     $('#icaldetailscontent').html(details);
-    
+
     if ($('#icaldetailscontent').html().trim() === '') {
         $('#icaldetails').fadeOut();
     }
@@ -66,13 +66,13 @@ function generateGoogleCal() {
     var inputTitle = encodeURIComponent($('#inputTitle').val());
     var isAllDay = $('#alldayevent').is(':checked');
     var offset = $('#timezones').find(':selected').val();
-    
+
     var begin = moment.tz($('#inputStartDate2').val() + ' ' +  $('#inputStartTime2').val(), 'lll', offset);
     var end = moment.tz($('#inputEndDate2').val() + ' ' +  $('#inputEndTime2').val(), 'lll', offset);
-    
+
     var gcalStart;
     var gcalEnd;
-    
+
     if (isAllDay) {
         end.add(1, 'days');
         gcalStart = begin.format('YYYYMMDD');
@@ -82,13 +82,13 @@ function generateGoogleCal() {
         gcalStart = begin.utc().format('YYYYMMDDTHHmm[00Z]');
         gcalEnd = end.utc().format('YYYYMMDDTHHmm[00Z]');
     }
-    
+
     var details = '';
-    
+
     if ($('#includesubject').prop('checked')) {
         details += $('#inputTitle').val();
     }
-    
+
     if ($('#includedatetime').prop('checked') && $('#inputStartDate2').val() !== '' && $('#inputEndDate2').val() !== '') {
         if (details !== '') {
             details += SEPARATOR;
@@ -110,33 +110,33 @@ function generateGoogleCal() {
             }
         }
     }
-    
+
     if ($('#includevenue').prop('checked') && $('#inputVenue').val() !== '') {
         if (details !== '') {
             details += SEPARATOR;
-        }			
+        }
         details += 'Venue: ' + $('#inputVenue').val();
     }
-    
+
     if (details !== '') {
         details += SEPARATOR;
     }
-    
+
     details += $('#inputDetails').val();
-    
+
     var inputDetails = encodeURIComponent(details);
     var inputVenue = encodeURIComponent($('#inputVenue').val());
-    
+
     var linkTemplate = 'https://www.google.com/calendar/render?action=TEMPLATE&text=%s&dates=%s/%s&details=%s&location=%s&trp=true&sf=true&output=xml#f';
     var generatedLink = sprintf(linkTemplate, inputTitle, gcalStart, gcalEnd, inputDetails, inputVenue);
-    
+
     return generatedLink;
 }
 
 function generateURL() {
     'use strict';
     var uri = new URI();
-    
+
     var data = {
         sub: $('#inputTitle').val(),
         det: $('#inputDetails').val(),
@@ -152,7 +152,7 @@ function generateURL() {
         iv: $('#includevenue').prop('checked'),
         dl: 1
     };
-    
+
     return uri.query(data);
 }
 
@@ -160,27 +160,27 @@ function parseURL() {
     'use strict';
     var uri = new URI();
     var query = URI.parse(uri.toString()).query;
-    
+
     if (query !== '' && query !== undefined) {
         var result = URI.parseQuery(query);
-        
+
         $('#inputTitle').val(result.sub);
         $('#inputDetails').val(result.det);
         $('#timezones').selectpicker('val', result.tz);
-        $('#alldayevent').prop('checked', result.allday === 'true');        
+        $('#alldayevent').prop('checked', result.allday === 'true');
         $('#inputStartDate2').val(result.sd);
         $('#inputStartTime2').val(result.st);
         $('#inputEndDate2').val(result.ed);
         $('#inputEndTime2').val(result.et);
-        $('#inputVenue').val(result.venue);        
+        $('#inputVenue').val(result.venue);
         $('#includesubject').prop('checked', result.isub === 'true');
         $('#includedatetime').prop('checked', result.idt === 'true');
         $('#includevenue').prop('checked', result.iv === 'true');
-        
+
         if (result.dl !== undefined && parseInt(result.dl) === 1) {
             $('#generateFormCalendar').trigger('submit');
         }
-        
+
         $('#outputDirectLink').val(uri.toString());
         $('#outputGCalLink').val(generateGoogleCal());
         updatePreview();
@@ -204,23 +204,23 @@ $(function() {
 
     laddaShortLink = Ladda.create($('#generateShortLink')[0]);
     laddaGCalShortLink = Ladda.create($('#generateGCalShortLink')[0]);
-    
+
 	$('#generateFormCalendar').validator().on('submit', function(e) {
         if (!e.isDefaultPrevented()) {
             e.preventDefault();
-        
+
             var isAllDay = $('#alldayevent').is(':checked');
             var offset = $('#timezones').find(':selected').val(); //.data('offset');
-            
+
             var begin = moment.tz($('#inputStartDate2').val() + ' ' +  $('#inputStartTime2').val(), 'lll', offset);
             var end = moment.tz($('#inputEndDate2').val() + ' ' +  $('#inputEndTime2').val(), 'lll', offset);
-            
+
             var details = '';
-            
+
             if ($('#includesubject').prop('checked')) {
                 details += $('#inputTitle').val();
             }
-            
+
             if ($('#includedatetime').prop('checked')) {
                 if (details !== '') {
                     details += SEPARATOR;
@@ -242,42 +242,42 @@ $(function() {
                     }
                 }
             }
-            
+
             if ($('#includevenue').prop('checked')) {
                 if (details !== '') {
                     details += SEPARATOR;
-                }			
+                }
                 details += 'Venue - ' + $('#inputVenue').val();
             }
-            
+
             if (details !== '') {
                 details += SEPARATOR;
             }
-            
+
             details += $('#inputDetails').val();
-            
+
             var title = begin.format('YYYYMMDD') + '-' + $('#inputTitle').val().toLowerCase();
             title = title.replace(/[\W_]+/g,'-');
-                    
+
             cal = ics();
             cal.addEvent($('#inputTitle').val(), details, $('#inputVenue').val(), begin, end, isAllDay);
-            
+
             cal.download(title);
         }
     });
-    
+
     $('#generateFormCalendar').on('change', function() {
         updatePreview();
         $('#outputDirectLink').val(generateURL());
         $('#outputGCalLink').val(generateGoogleCal());
     });
-    
+
     $('#generateFormCalendar').on('dp.change', function() {
         updatePreview();
         $('#outputDirectLink').val(generateURL());
         $('#outputGCalLink').val(generateGoogleCal());
     });
-    
+
     $('#alldayevent').change(function(){
         $('#timezones').prop('disabled', $('#alldayevent').prop('checked'));
         $('#timezones').selectpicker('refresh');
@@ -304,25 +304,23 @@ $(function() {
     $('#inputEndTime .form-control').on('click', function() {
         $('#inputEndTime').data('DateTimePicker').show();
     });
-    
+
     $('#generateShortLink').on('click', function() {
 	 	laddaShortLink.start();
-        //var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
-        var bitly = Bitly.setLogin('icalgen').setKey('R_f8d9e1048fa94b22bfc5141f0d103d62').setCallback(updateShortLink);
+        var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);
         bitly.shorten(generateURL());
     });
-    
+
     $('#generateGCalShortLink').on('click', function() {
 	 	laddaGCalShortLink.start();
-        //var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
-        var bitly2 = Bitly.setLogin('icalgen').setKey('R_f8d9e1048fa94b22bfc5141f0d103d62').setCallback(updateGCalShortLink);
+        var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
         bitly2.shorten(generateGoogleCal());
     });
-    
+
     $('#timezones').timezones();
     $('#timezones').selectpicker();
 	$(':checkbox').checkboxpicker();
-    
+
     $('#inputStartDate').datetimepicker({
         format: 'll'
     });
@@ -338,6 +336,6 @@ $(function() {
     $('#inputEndTime').datetimepicker({
         format: 'LT'
     });
-    
+
     parseURL();
 });
