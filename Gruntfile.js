@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
-  
+
   grunt.loadNpmTasks('grunt-aws');
 
   // Configurable paths
@@ -346,9 +346,10 @@ module.exports = function (grunt) {
         'svgmin'
       ]
     },
-    
+
+    /*
     aws: grunt.file.readJSON('aws-credentials.json'),
-    
+
     s3: {
       options: {
         accessKeyId: '<%= aws.accessKeyId %>',
@@ -361,8 +362,9 @@ module.exports = function (grunt) {
         src: '**'
       }
     },
-    
-    
+    */
+
+
   });
 
 
