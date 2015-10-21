@@ -3,6 +3,9 @@
 ## Demo
 See live demo [here](http://icalgen.yc.sg)!
 
+## Building this
+Clone/fork/download this repository, then run `npm install` and `bower install` to install project dependences, and finally `grunt build` to build. After that you can simply use the `dist` folder.
+
 ## Why?
 There are numerous iCalendar (.ics) generators already available, but I could not find one that met my needs:
 * Most of the existing .ics generators don't support timezones.
