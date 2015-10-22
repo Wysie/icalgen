@@ -4,7 +4,11 @@
 See live demo [here](http://icalgen.yc.sg)!
 
 ## Building this
-Clone/fork/download this repository, then run `npm install` and `bower install` to install project dependences, and finally `grunt build` to build. After that you can simply use the `dist` folder.
+Clone/fork/download this repository, then run `npm install` and `bower install` to install project dependencies.
+
+Next, you'll need to find `var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);` and `var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);` and replace `BITLY_LOGIN` with your bit.ly login, and `BITLY_API_KEY` with your bit.ly API key.
+
+Finally, `grunt build` to build. After that you can simply use the `dist` folder.
 
 ## Why?
 There are numerous iCalendar (.ics) generators already available, but I could not find one that met my needs:
