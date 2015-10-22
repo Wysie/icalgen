@@ -2,19 +2,19 @@
   "name": "gmokit",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.4",
+    "bootstrap": "3.3.5",
     "modernizr": "~2.8.2",
-    "sprintf": "~1.0.2",
-    "eonasdan-bootstrap-datetimepicker": "~4.7.14",
+    "sprintf": "1.0.3",
+    "eonasdan-bootstrap-datetimepicker": "4.17.37",
     "bootstrap-select": "~1.6.5",
-    "moment": "~2.10.2",
-    "moment-timezone": "~0.3.1",
+    "moment": "2.10.6",
+    "moment-timezone": "0.4.1",
     "timezones": "~0.1.0",
-    "bootstrap-checkbox": "~1.2.7",
+    "bootstrap-checkbox": "1.2.14",
     "ics.js": "https://github.com/Wysie/ics.js.git#*",
     "jquery": "~2.1.4",
     "bootswatch-dist": "yeti",
-    "bootstrap-validator": "~0.8.1",
+    "bootstrap-validator": "0.9.0",
     "uri.js": "~1.15.0",
     "github-fork-ribbon-css": "~0.1.1",
     "ladda-bootstrap": "~0.1.0"
@@ -23,7 +23,9 @@
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.4",
     "bootswatch-dist": "yeti",
-    "moment": "~2.10.2",
-    "moment-timezone": "~0.3.1"
+    "moment": "2.10.6",
+    "moment-timezone": "0.4.1",
+    "bootstrap-validator": "0.9.0",
+    "eonasdan-bootstrap-datetimepicker": "4.17.37"
   }
 }

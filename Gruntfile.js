@@ -347,24 +347,23 @@ module.exports = function (grunt) {
       ]
     },
 
-    /*
     aws: grunt.file.readJSON('aws-credentials.json'),
 
+    /*
     s3: {
       options: {
         accessKeyId: '<%= aws.accessKeyId %>',
         secretAccessKey: '<%= aws.secretAccessKey %>',
         bucket: 'icalgen.yc.sg',
-        region: 'ap-southeast-1'
+        region: 'ap-southeast-1',
+        cache: false
       },
       build: {
         cwd: '<%= config.dist %>',
-        src: '**'
+        src: '**',
       }
     },
     */
-
-
   });
 
 
