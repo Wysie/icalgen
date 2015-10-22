@@ -3,6 +3,29 @@ var SEPARATOR = (navigator.appVersion.indexOf('Win') !== -1) ? '\r\n' : '\n';
 var laddaShortLink;
 var laddaGCalShortLink;
 
+function init() {
+    'use strict';
+
+    gapi.client.setApiKey('GOOGLE_API_BROWSER_KEY');
+    gapi.client.load('urlshortener', 'v1',function(){});
+}
+
+function googleShorten(longUrl) {
+    'use strict';
+    var request = gapi.client.urlshortener.url.insert({
+        'resource': {
+            'longUrl': longUrl
+        }
+    });
+
+    request.execute(function(response) {
+        if(response.id != null) {
+            $('#outputGCalShortLink').val(response.id);
+            laddaGCalShortLink.stop();
+        }
+    });
+ }
+
 function updatePreview() {
     'use strict';
     var isAllDay = $('#alldayevent').prop('checked');
@@ -313,8 +336,7 @@ $(function() {
 
     $('#generateGCalShortLink').on('click', function() {
 	 	laddaGCalShortLink.start();
-        var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateGCalShortLink);
-        bitly2.shorten(generateGoogleCal());
+        googleShorten(generateGoogleCal());
     });
 
     $('#timezones').timezones();

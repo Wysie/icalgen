@@ -6,7 +6,9 @@ See live demo [here](http://icalgen.yc.sg)!
 ## Building this
 Clone/fork/download this repository, then run `npm install` and `bower install` to install project dependencies.
 
-Next, you'll need to find `var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);` and `var bitly2 = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);` and replace `BITLY_LOGIN` with your bit.ly login, and `BITLY_API_KEY` with your bit.ly API key.
+Next, you'll need to find `var bitly = Bitly.setLogin('BITLY_LOGIN').setKey('BITLY_API_KEY').setCallback(updateShortLink);` and replace `BITLY_LOGIN` with your bit.ly login, and `BITLY_API_KEY` with your bit.ly API key.
+
+You'll also need to find `gapi.client.setApiKey('GOOGLE_API_BROWSER_KEY');` and replace `GOOGLE_API_BROWSER_KEY` with your Google API Browser Key.
 
 Finally, `grunt build` to build. After that you can simply use the `dist` folder.
 

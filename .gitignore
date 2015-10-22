@@ -3,3 +3,4 @@ dist
 .tmp
 bower_components
 aws-credentials.json
+.DS_Store
