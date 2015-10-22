@@ -347,9 +347,9 @@ module.exports = function (grunt) {
       ]
     },
 
+    /*
     aws: grunt.file.readJSON('aws-credentials.json'),
 
-    /*
     s3: {
       options: {
         accessKeyId: '<%= aws.accessKeyId %>',
